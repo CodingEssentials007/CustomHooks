@@ -1,26 +1,25 @@
-
-import {useQuery} from '@tanstack/react-query';
-import axios from 'axios';
+import {useApi} from './hook/useApi'
 
 function Home() {
-
-const {data,isLoading,isError,refetch}=useQuery(['anything'],()=>{
+    const [dataFact,factLoading,factError,refetchFact] =useApi('https://catfact.ninja/fact','fact');
+    const [dataImg,ImgLoading,ImgError,refetchImg] =useApi('https://dog.ceo/api/breeds/image/random','img');
     
-    return axios.get('https://catfact.ninja/fact').then((res)=> res.data)
-})
-if(isLoading)
-{
-    return <h1>Loading</h1>
-}
-
-if(isError)
-{
-    return <h1>Sorry Something is wrong with api</h1>
-}
+    if(factLoading || ImgLoading)
+    {
+        return <h1>Data is Loading </h1>
+    }
+    if(factError || ImgError)
+    {
+        return <h1>somthing is wrong with api </h1>
+    }
 
     return (<div>
-                <h1>{data?.fact}</h1>
-                <button onClick={refetch}> Fetch Data </button>
+                <img  src={dataImg?.message} />
+                <button onClick={refetchImg}> Fetch Image </button>
+
+                <h1>{dataFact?.fact}</h1>
+                <button onClick={refetchFact}> Fetch Data </button>
+
             </div>  
             );
 }

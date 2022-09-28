@@ -4,6 +4,7 @@ import {QueryClientProvider, QueryClient} from '@tanstack/react-query';
 import Home from './Component/Home';
 
 function App() {
+
   const client=new QueryClient({
     defaultOptions:{
       queries:{
